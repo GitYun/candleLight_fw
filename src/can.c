@@ -39,6 +39,12 @@ void can_init(can_data_t *hcan, CAN_TypeDef *instance)
 	itd.Speed = GPIO_SPEED_FREQ_HIGH;
 	itd.Alternate = GPIO_AF4_CAN;
 	HAL_GPIO_Init(GPIOB, &itd);
+#elif defined(STM32F1)
+	itd.Pin = GPIO_PIN_8|GPIO_PIN_9;
+	itd.Mode = GPIO_MODE_AF_PP;
+	itd.Pull = GPIO_NOPULL;
+	itd.Speed = GPIO_SPEED_FREQ_HIGH;
+	HAL_GPIO_Init(GPIOB, &itd);
 #elif defined(STM32F4)
 	itd.Pin = GPIO_PIN_0|GPIO_PIN_1;
 	itd.Mode = GPIO_MODE_AF_PP;
@@ -48,11 +54,15 @@ void can_init(can_data_t *hcan, CAN_TypeDef *instance)
 	HAL_GPIO_Init(GPIOD, &itd);
 #endif
 
+	// default CAN baud rate is 500K
 	hcan->instance   = instance;
 	hcan->brp        = 6;
 	hcan->sjw		 = 1;
 #if defined(STM32F0)
 	hcan->phase_seg1 = 13;
+	hcan->phase_seg2 = 2;
+#elif defined(STM32F1)
+	hcan->phase_seg1 = 9;
 	hcan->phase_seg2 = 2;
 #elif defined(STM32F4)
 	hcan->phase_seg1 = 12;

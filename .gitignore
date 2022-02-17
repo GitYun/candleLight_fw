@@ -3,8 +3,10 @@
 *.o
 *.d
 *.bin
+Makefile
 *.asmo
 *.elf
 *~
 .cache/
 compile_commands.json
+/Debug/

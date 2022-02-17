@@ -6,6 +6,10 @@
 #include <cmsis/device/stm32f072xb.h>
 #endif
 
+#ifdef STM32F103xE
+#include <cmsis/device/stm32f103xe.h>
+#endif
+
 #ifdef STM32F407xx
 #include <cmsis/device/stm32f407xx.h>
 #endif

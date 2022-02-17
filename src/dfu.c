@@ -32,6 +32,7 @@ THE SOFTWARE.
 
 #define SYSMEM_STM32F042 0x1FFFC400
 #define SYSMEM_STM32F072 0x1FFFC800
+#define SYSMEM_STM32F103 0x1FFFC800
 
 static uint32_t dfu_reset_to_bootloader_magic;
 
@@ -60,6 +61,13 @@ void __initialize_hardware_early(void)
 				dfu_jump_to_bootloader(SYSMEM_STM32F072);
 				break;
 
+			// STM32F10x Dev ID:
+			// 16K <= Falsh <= 32K is 0x412
+			// 64K <= Flash <= 128K is 0x410
+			// 256K <= Flash <= 512K is 0x414
+			case 0x414: // STM32F10x (Flash >= 256K)
+				dfu_jump_to_bootloader(SYSMEM_STM32F103);
+				break;
 		}
 	}
 
